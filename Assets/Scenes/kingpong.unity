@@ -643,6 +643,7 @@ GameObject:
   - component: {fileID: 821771743}
   - component: {fileID: 821771742}
   - component: {fileID: 821771747}
+  - component: {fileID: 821771748}
   m_Layer: 0
   m_Name: Paddle Right
   m_TagString: Untagged
@@ -768,6 +769,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &821771748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 821771741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 279ef45ec5465b542a239cd6ed0d1cc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: -10
+  isPlayerOne: 0
+  yMax: 34
+  yMin: -34
+  Axis1: Fire1
+  Axis2: Fire2
+  Microbit: {fileID: 1100431850}
+  useButtons: 0
+  PotentialComPort: COM2
+  UseDelta: 1
 --- !u!1 &900090740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,6 +1192,7 @@ GameObject:
   - component: {fileID: 1367939290}
   - component: {fileID: 1367939289}
   - component: {fileID: 1367939294}
+  - component: {fileID: 1367939295}
   m_Layer: 0
   m_Name: Paddle Left
   m_TagString: Untagged
@@ -1294,6 +1318,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!114 &1367939295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367939288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 279ef45ec5465b542a239cd6ed0d1cc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  isPlayerOne: 1
+  yMax: 34
+  yMin: -34
+  Axis1: Fire1
+  Axis2: Fire2
+  Microbit: {fileID: 900090742}
+  useButtons: 0
+  PotentialComPort: COM1
+  UseDelta: 1
 --- !u!1 &1478682587
 GameObject:
   m_ObjectHideFlags: 0

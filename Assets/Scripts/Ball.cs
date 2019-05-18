@@ -7,6 +7,10 @@ namespace KingPong {
     {
         public float speed = 30;
 
+        public GameObject firstPaddle;
+        public float spawnVariance = 3;
+
+
         // Start is called before the first frame update
         void Start()
         {
