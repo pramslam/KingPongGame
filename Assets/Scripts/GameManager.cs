@@ -7,8 +7,8 @@ namespace KingPong
     public class GameManager : MonoBehaviour
     {
         public Ball ball;
-        public Paddle paddleP1;
-        public Paddle paddleP2;
+        public Paddle paddleLeft;
+        public Paddle paddleRight;
 
         public ScoreManager scoreManager;
         public Timer timer;

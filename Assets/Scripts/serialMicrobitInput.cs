@@ -22,7 +22,7 @@ namespace KingPong
         public int outputI = 0;
         public int outputI2 = 0;
 
-        int outputVI = 0;
+        //int outputVI = 0;
 
         public float outputF = 0;
         public float outputV = 0;
@@ -105,13 +105,13 @@ namespace KingPong
         {
             while (true)
             {
-                Debug.Log("beep");
+                // Debug.Log("beep");
                 if (port.IsOpen)
                 {
                     //string sL = port.ReadExisting();
 
                     s = port.ReadLine();
-                    Debug.Log(s);
+                    //Debug.Log(s);
                     //Debug.Log(sL);
 
                     //yield return s = ;
@@ -219,7 +219,7 @@ namespace KingPong
         {
             if (inp != null)
             {
-                Debug.Log(inp);
+                //Debug.Log(inp);       // displays log for encoder input
 
                 if (inp.Contains("(") && inp.Contains(")"))
                 {
@@ -276,7 +276,7 @@ namespace KingPong
                 //	outputF = (float)outputI2 / (float)max;
 
             }
-            Debug.Log(inp);
+            //Debug.Log(inp);
         }
     }
 }

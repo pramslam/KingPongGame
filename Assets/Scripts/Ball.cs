@@ -10,6 +10,8 @@ namespace KingPong {
         public GameObject firstPaddle;
         public float spawnVariance = 3;
 
+        public GameObject leftWall;
+        public GameObject rightWall;
 
         // Start is called before the first frame update
         void Start()
@@ -21,12 +23,12 @@ namespace KingPong {
         void OnCollisionEnter2D(Collision2D col)
         {
             // Note: 'col' holds the collision information. If the
-            // Ball collided with a racket, then:
-            //   col.gameObject is the racket
-            //   col.transform.position is the racket's position
-            //   col.collider is the racket's collider
+            // Ball collided with a paddle, then:
+            //   col.gameObject is the paddle
+            //   col.transform.position is the paddle's position
+            //   col.collider is the paddle's collider
 
-            // Hit the left Racket?
+            // Hit the left paddle
             if (col.gameObject.name == "Paddle Left")
             {
                 // Calculate hit Factor
@@ -41,7 +43,7 @@ namespace KingPong {
                 GetComponent<Rigidbody2D>().velocity = dir * speed;
             }
 
-            // Hit the right Racket?
+            // Hit the right paddle
             if (col.gameObject.name == "Paddle Right")
             {
                 // Calculate hit Factor
@@ -57,7 +59,7 @@ namespace KingPong {
             }
         }
 
-        float hitFactor(Vector2 ballPos, Vector2 racketPos, float racketHeight)
+        float hitFactor(Vector2 ballPos, Vector2 paddlePos, float paddleHeight)
         {
             // ascii art:
             // ||  1 <- at the top of the racket
@@ -65,7 +67,22 @@ namespace KingPong {
             // ||  0 <- at the middle of the racket
             // ||
             // || -1 <- at the bottom of the racket
-            return (ballPos.y - racketPos.y) / racketHeight;
+            return (ballPos.y - paddlePos.y) / paddleHeight;
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            // Hit the left wall?
+            if (col.gameObject.name == "Wall Left")
+            {
+                Debug.Log("Right Point!");
+            }
+
+            // Hit the right wall?
+            if (col.gameObject.name == "Wall Right")
+            {
+                Debug.Log("Left Point!");
+            }
         }
     }
 }
