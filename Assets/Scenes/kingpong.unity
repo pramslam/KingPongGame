@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b39b782075a2c640a7ac5ae0f7726bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setTime: 180
-  text: {fileID: 771281039}
+  startTime: 180
+  timerText: {fileID: 771281039}
 --- !u!4 &30566369
 Transform:
   m_ObjectHideFlags: 0
@@ -1370,8 +1370,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 690d84452b10be64188b5c5b6654001c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftScore: {fileID: 1994822469}
-  rightScore: {fileID: 783818762}
+  leftScoreText: {fileID: 1994822469}
+  rightScoreText: {fileID: 783818762}
 --- !u!4 &1347784202
 Transform:
   m_ObjectHideFlags: 0

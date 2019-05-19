@@ -25,7 +25,6 @@ namespace DLO   {
             DontDestroyOnLoad(gameObject);
         }
 
-
         //Used to play single bounce sound clips.
         public void PlayBounce()
         {
@@ -43,7 +42,7 @@ namespace DLO   {
         public void PlayScore()
         {
             //Randomly select sound
-            int i = Random.Range(0, bounceSounds.Length - 1);
+            int i = Random.Range(0, scoreSounds.Length - 1);
 
             //Set the clip of our efxSource audio source to the clip passed in as a parameter.
             sfxSource.clip = scoreSounds[i];

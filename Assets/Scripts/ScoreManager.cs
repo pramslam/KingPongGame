@@ -6,10 +6,13 @@ using UnityEngine.UI;
 namespace DLO   {
     public class ScoreManager : MonoBehaviour
     {
-        public static ScoreManager instance = null;     //Allows other scripts to call functions from SoundManager.             
+        public static ScoreManager instance = null;     //Allows other scripts to call functions from ScoreManager.             
 
-        public Text leftScore;
-        public Text rightScore;
+        public Text leftScoreText;
+        public Text rightScoreText;
+
+        private int leftScore = 0;
+        private int rightScore = 0;
 
         // Ensures a singleton
         void Awake()
@@ -24,15 +27,37 @@ namespace DLO   {
             //Set ScoreManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
             DontDestroyOnLoad(gameObject);
         }
-
-        public void ScoreLeft()
+        
+        void Start()
         {
-            Debug.Log("ScoreLeft");
+            leftScore = 0;
+            rightScore = 0;
+            UpdateScore();
         }
 
-        public void ScoreRight()
+        public void AddScoreLeft(int newScoreValue)
         {
-            Debug.Log("ScoreRight");
+            leftScore = leftScore + newScoreValue;
+            UpdateScore();
+        }
+
+        public void AddScoreRight(int newScoreValue)
+        {
+            rightScore = rightScore + newScoreValue;
+            UpdateScore();
+        }
+
+        public void ResetScore()
+        {
+            Debug.Log("Reset Scores");
+            leftScore = 0;
+            rightScore = 0;
+        }
+
+        void UpdateScore()
+        {
+            leftScoreText.text = leftScore.ToString();
+            rightScoreText.text = rightScore.ToString();
         }
     }
 }

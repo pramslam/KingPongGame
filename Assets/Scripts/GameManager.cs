@@ -39,12 +39,12 @@ namespace DLO   {
 
         }
 
-        void playBounce()
+        void PlayBounce()
         {
             audioManager.PlayBounce();
         }
 
-        void playScore()
+        void PlayScore()
         {
             audioManager.PlayScore();
         }

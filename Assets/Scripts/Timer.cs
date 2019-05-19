@@ -2,63 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading;
 
 namespace DLO   {
     public class Timer : MonoBehaviour
     {
-        public float setTime = 180f;
+        public int startTime = 180;
+        public Text timerText;      // UI text object
 
         bool isRunning = false;
-        float startTime = 0f;
-        float deltaTime = 0f;
-        float t;
-        string displayTime = "";
-
-        public Text text;
-
+        int timeLeft;               // Seconds left overall
+        
         // Start is called before the first frame update
         void Start()
         {
-            StartTimer();
+            isRunning = true;
+            timeLeft = startTime;
+            StartCoroutine("LoseTime");
+            Time.timeScale = 1;             // Ensure the timescale is right
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (isRunning)
+            // Show time left
+            timerText.text = ConvertSteps2Time(timeLeft);
+        }
+
+        // Coroutine
+        IEnumerator LoseTime()
+        {
+            while (isRunning)
             {
-                if (setTime - t <= 0)
-                {
-                    isRunning = false;
-                    //Debug.Log(t);
-                }
-                else
-                {
-                    t += Time.deltaTime;
-                    displayTime = ConvertSteps2Time(setTime - t);
-
-                    //Debug.Log(t);
-                }
+                yield return new WaitForSeconds(1);
+                timeLeft--;
             }
-        }
-
-        void StartTimer()
-        {
-            isRunning = true;
-            t = 0;
-            t = TimerCount();
-            displayTime = ConvertSteps2Time(t);
-
-            //Debug.Log(displayTime);
-            //text.text = displayTime;
-        }
-
-        public float TimerCount()
-        {
-            deltaTime += Time.deltaTime;
-            float dt = setTime - (deltaTime - startTime);
-
-            return dt;
         }
 
         string ConvertSteps2Time(float steps)
@@ -69,15 +47,19 @@ namespace DLO   {
             return minutes + " : " + seconds;
         }
 
-        public void pauseTimer()
+        public void PauseTimer()
         {
             isRunning = !isRunning;
-
         }
 
-        public void resetTimer()
+        public void ResetTimer()
         {
-            t = 0;
+            timeLeft = startTime;
+        }
+
+        public int GetTimeLeft()
+        {
+            return timeLeft;
         }
     }
 }

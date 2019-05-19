@@ -34,7 +34,7 @@ namespace DLO   {
             if (col.gameObject.name == "Paddle Left")
             {
                 // Calculate hit Factor
-                float y = hitFactor(transform.position,
+                float y = HitFactor(transform.position,
                                     col.transform.position,
                                     col.collider.bounds.size.y);
 
@@ -52,7 +52,7 @@ namespace DLO   {
             if (col.gameObject.name == "Paddle Right")
             {
                 // Calculate hit Factor
-                float y = hitFactor(transform.position,
+                float y = HitFactor(transform.position,
                                     col.transform.position,
                                     col.collider.bounds.size.y);
 
@@ -67,7 +67,7 @@ namespace DLO   {
             }
         }
 
-        float hitFactor(Vector2 ballPos, Vector2 paddlePos, float paddleHeight)
+        float HitFactor(Vector2 ballPos, Vector2 paddlePos, float paddleHeight)
         {
             // ascii art:
             // ||  1 <- at the top of the racket
@@ -84,14 +84,14 @@ namespace DLO   {
             if (col.gameObject.name == "Wall Left")
             {
                 gameManager.audioManager.PlayScore();
-                Debug.Log("Right Point!");
+                gameManager.scoreManager.AddScoreRight(1);
             }
 
             // Hit the right wall?
             if (col.gameObject.name == "Wall Right")
             {
                 gameManager.audioManager.PlayScore();
-                Debug.Log("Left Point!");
+                gameManager.scoreManager.AddScoreLeft(1);
             }
         }
     }
