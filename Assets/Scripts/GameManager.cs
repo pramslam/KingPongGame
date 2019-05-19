@@ -7,11 +7,11 @@ namespace DLO   {
     {
         public static GameManager instance = null;     //Allows other scripts to call functions from GameManager.             
 
-        public Ball ball;
-        
         public ScoreManager scoreManager;
         public AudioManager audioManager;
         public Timer timer;
+
+        public int pointsPerScore = 100;        // Points given when scoring
 
         // Ensures a singleton
         void Awake()
@@ -39,14 +39,15 @@ namespace DLO   {
 
         }
 
-        void PlayBounce()
-        {
-            audioManager.PlayBounce();
-        }
+        // Public Functions
+        #region
+        public void PlayBounce()    { audioManager.PlayBounce(); }
 
-        void PlayScore()
-        {
-            audioManager.PlayScore();
-        }
+        public void PlayScore()     { audioManager.PlayScore(); }
+
+        public void AddScoreLeft()  { scoreManager.AddScoreLeft(pointsPerScore); }
+
+        public void AddScoreRight() { scoreManager.AddScoreRight(pointsPerScore); }
+        #endregion
     }
 }

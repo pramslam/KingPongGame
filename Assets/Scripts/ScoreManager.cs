@@ -49,9 +49,9 @@ namespace DLO   {
 
         public void ResetScore()
         {
-            Debug.Log("Reset Scores");
             leftScore = 0;
             rightScore = 0;
+            UpdateScore();
         }
 
         void UpdateScore()

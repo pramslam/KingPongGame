@@ -6,10 +6,9 @@ namespace DLO   {
     public class Ball : MonoBehaviour
     {
         public float speed = 30;
-
-        public GameObject firstPaddle;
         public float spawnVariance = 3;
 
+        public GameObject firstPaddle;
         public GameObject leftWall;
         public GameObject rightWall;
 
@@ -45,7 +44,7 @@ namespace DLO   {
                 GetComponent<Rigidbody2D>().velocity = dir * speed;
 
                 // Play bounce sound
-                gameManager.audioManager.PlayBounce();
+                gameManager.PlayBounce();
             }
 
             // Hit the right paddle
@@ -63,7 +62,7 @@ namespace DLO   {
                 GetComponent<Rigidbody2D>().velocity = dir * speed;
 
                 // Play bounce sound
-                gameManager.audioManager.PlayBounce();
+                gameManager.PlayBounce();
             }
         }
 
@@ -83,15 +82,30 @@ namespace DLO   {
             // Hit the left wall?
             if (col.gameObject.name == "Wall Left")
             {
-                gameManager.audioManager.PlayScore();
-                gameManager.scoreManager.AddScoreRight(1);
+                gameManager.PlayScore();
+                gameManager.AddScoreRight();
             }
 
             // Hit the right wall?
             if (col.gameObject.name == "Wall Right")
             {
-                gameManager.audioManager.PlayScore();
-                gameManager.scoreManager.AddScoreLeft(1);
+                gameManager.PlayScore();
+                gameManager.AddScoreLeft();
+            }
+        }
+
+        void OnTriggerExit2D(Collider2D col)
+        {
+            // Hit the left wall?
+            if (col.gameObject.name == "Wall Left")
+            {
+                Debug.Log("Particles and Re-serve Ball");
+            }
+
+            // Hit the right wall?
+            if (col.gameObject.name == "Wall Right")
+            {
+                Debug.Log("Particles and Re-serve Ball");
             }
         }
     }

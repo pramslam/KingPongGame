@@ -47,19 +47,13 @@ namespace DLO   {
             return minutes + " : " + seconds;
         }
 
-        public void PauseTimer()
-        {
-            isRunning = !isRunning;
-        }
+        // Public Functions
+        #region
+        public void PauseTimer() { isRunning = !isRunning; }
 
-        public void ResetTimer()
-        {
-            timeLeft = startTime;
-        }
+        public void ResetTimer() { timeLeft = startTime; }
 
-        public int GetTimeLeft()
-        {
-            return timeLeft;
-        }
+        public int GetTimeLeft() { return timeLeft; }
+        #endregion
     }
 }

@@ -25,6 +25,8 @@ namespace DLO   {
             DontDestroyOnLoad(gameObject);
         }
 
+        // Public Functions
+        #region
         //Used to play single bounce sound clips.
         public void PlayBounce()
         {
@@ -50,5 +52,6 @@ namespace DLO   {
             //Play the clip.
             sfxSource.Play();
         }
+        #endregion
     }
 }
