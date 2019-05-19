@@ -8,9 +8,7 @@ namespace DLO   {
         public static GameManager instance = null;     //Allows other scripts to call functions from GameManager.             
 
         public Ball ball;
-        public Paddle paddleLeft;
-        public Paddle paddleRight;
-
+        
         public ScoreManager scoreManager;
         public AudioManager audioManager;
         public Timer timer;
