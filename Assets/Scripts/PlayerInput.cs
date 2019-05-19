@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KingPong
-{
+namespace DLO   {
     public class PlayerInput : MonoBehaviour
     {
         public float speed = 10f;

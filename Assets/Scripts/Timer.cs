@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace KingPong
-{
+namespace DLO   {
     public class Timer : MonoBehaviour
     {
         public float setTime = 180f;

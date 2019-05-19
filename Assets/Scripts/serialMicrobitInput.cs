@@ -4,8 +4,7 @@ using UnityEngine;
 using System.IO.Ports;
 using System.Threading;
 
-namespace KingPong
-{
+namespace DLO   {
     public class serialMicrobitInput : MonoBehaviour
     {
         public static string com = "COM6";

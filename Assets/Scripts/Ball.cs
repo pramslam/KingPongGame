@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KingPong {
+namespace DLO   {
     public class Ball : MonoBehaviour
     {
         public float speed = 30;
