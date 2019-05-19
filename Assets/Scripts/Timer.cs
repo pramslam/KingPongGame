@@ -12,7 +12,7 @@ namespace KingPong
         bool isRunning = false;
         float startTime = 0f;
         float deltaTime = 0f;
-        float t = 0f;
+        float t;
         string displayTime = "";
 
         public Text text;
@@ -31,14 +31,14 @@ namespace KingPong
                 if (setTime - t <= 0)
                 {
                     isRunning = false;
-                    //TimesUp();
+                    //Debug.Log(t);
                 }
                 else
                 {
                     t += Time.deltaTime;
                     displayTime = ConvertSteps2Time(setTime - t);
 
-                    //text.text = displayTime;
+                    //Debug.Log(t);
                 }
             }
         }
@@ -49,6 +49,8 @@ namespace KingPong
             t = 0;
             t = TimerCount();
             displayTime = ConvertSteps2Time(t);
+
+            //Debug.Log(displayTime);
             //text.text = displayTime;
         }
 

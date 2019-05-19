@@ -11,6 +11,7 @@ namespace KingPong
         public Paddle paddleRight;
 
         public ScoreManager scoreManager;
+        public AudioManager audioManager;
         public Timer timer;
 
         // Start is called before the first frame update
@@ -23,6 +24,16 @@ namespace KingPong
         void Update()
         {
 
+        }
+
+        void playBounce()
+        {
+            audioManager.PlayBounce();
+        }
+
+        void playScore()
+        {
+            audioManager.PlayScore();
         }
     }
 }

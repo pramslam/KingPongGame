@@ -13,6 +13,8 @@ namespace KingPong {
         public GameObject leftWall;
         public GameObject rightWall;
 
+        public GameManager gameManager;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -41,6 +43,9 @@ namespace KingPong {
 
                 // Set Velocity with dir * speed
                 GetComponent<Rigidbody2D>().velocity = dir * speed;
+
+                // Play bounce sound
+                gameManager.audioManager.PlayBounce();
             }
 
             // Hit the right paddle
@@ -56,6 +61,9 @@ namespace KingPong {
 
                 // Set Velocity with dir * speed
                 GetComponent<Rigidbody2D>().velocity = dir * speed;
+
+                // Play bounce sound
+                gameManager.audioManager.PlayBounce();
             }
         }
 
@@ -70,17 +78,19 @@ namespace KingPong {
             return (ballPos.y - paddlePos.y) / paddleHeight;
         }
 
-        private void OnTriggerEnter2D(Collider2D col)
+        void OnTriggerEnter2D(Collider2D col)
         {
             // Hit the left wall?
             if (col.gameObject.name == "Wall Left")
             {
+                gameManager.audioManager.PlayScore();
                 Debug.Log("Right Point!");
             }
 
             // Hit the right wall?
             if (col.gameObject.name == "Wall Right")
             {
+                gameManager.audioManager.PlayScore();
                 Debug.Log("Left Point!");
             }
         }
