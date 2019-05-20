@@ -7,11 +7,11 @@ using System.Threading;
 namespace DLO   {
     public class Timer : MonoBehaviour
     {
-        public int startTime = 180;
-        public Text timerText;      // UI text object
+        public int startTime = 180;         // In seconds
+        public Text timerText;              // UI text object
 
-        bool isRunning = false;
-        int timeLeft;               // Seconds left overall
+        private bool isRunning = false;     // For pausing
+        private int timeLeft;               // Seconds left overall
         
         // Start is called before the first frame update
         void Start()

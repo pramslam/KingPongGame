@@ -5,13 +5,13 @@ using UnityEngine;
 namespace DLO   {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager instance = null;     //Allows other scripts to call functions from GameManager.             
+        public static GameManager instance = null;  // Allows other scripts to call functions from GameManager.             
 
         public ScoreManager scoreManager;
         public AudioManager audioManager;
         public Timer timer;
 
-        public int pointsPerScore = 100;        // Points given when scoring
+        public int pointsPerScore = 100;            // Points given when scoring
 
         // Ensures a singleton
         void Awake()

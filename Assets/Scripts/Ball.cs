@@ -64,6 +64,13 @@ namespace DLO   {
                 // Play bounce sound
                 gameManager.PlayBounce();
             }
+
+            // Hit the top or bottom wall
+            if (col.gameObject.name == "Wall Top" || col.gameObject.name == "Wall Bottom")
+            {
+                // Play bounce sound
+                gameManager.PlayBounce();
+            }
         }
 
         float HitFactor(Vector2 ballPos, Vector2 paddlePos, float paddleHeight)
@@ -106,6 +113,20 @@ namespace DLO   {
             if (col.gameObject.name == "Wall Right")
             {
                 Debug.Log("Particles and Re-serve Ball");
+            }
+        }
+
+        void ServeBall(int scoringPlayer)
+        {
+            if (scoringPlayer == 1)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.left * speed;
+                Debug.Log("Serve to the left player");
+            }
+            if (scoringPlayer == 0)
+            {
+                GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+                Debug.Log("Serve to the right player");
             }
         }
     }
