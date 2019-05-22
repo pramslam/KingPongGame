@@ -10,8 +10,11 @@ namespace DLO   {
         public ScoreManager scoreManager;
         public AudioManager audioManager;
         public Timer timer;
+        public Ball ball;
 
         public int pointsPerScore = 100;            // Points given when scoring
+
+        private bool isEndGame;
 
         // Ensures a singleton
         void Awake()
@@ -30,13 +33,33 @@ namespace DLO   {
         // Start is called before the first frame update
         void Start()
         {
-
+            isEndGame = false;
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (Input.GetKeyDown("space"))
+            {
+                if (!isEndGame == true)
+                {
+                    PauseGame();
+                }
+            }
 
+            if (Input.GetKeyDown("r"))
+            {
+                RestartGame();
+            }
+
+            if (timer.GetTimeLeft() <= 0)
+            {
+                if (isEndGame == false)
+                {
+                    isEndGame = true;
+                    PauseGame();
+                }
+            }
         }
 
         // Public Functions
@@ -48,6 +71,20 @@ namespace DLO   {
         public void AddScoreLeft()  { scoreManager.AddScoreLeft(pointsPerScore); }
 
         public void AddScoreRight() { scoreManager.AddScoreRight(pointsPerScore); }
+        
+        void PauseGame()
+        {
+            ball.PauseBall();
+            timer.PauseTimer();
+        }
+
+        void RestartGame()
+        {
+            isEndGame = false;
+            timer.ResetTimer();
+            ball.ResetBall();
+            ball.ServeBall(Random.Range(0,1));
+        }
         #endregion
     }
 }

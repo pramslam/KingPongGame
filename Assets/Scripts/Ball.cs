@@ -5,10 +5,11 @@ using UnityEngine;
 namespace DLO   {
     public class Ball : MonoBehaviour
     {
-        public float speed = 30;
-        public float spawnVariance = 3;
+        bool isPaused = false;
+        Vector2 pausedVector = new Vector2(0,0);
 
-        public GameObject firstPaddle;
+        public float speed = 30;
+
         public GameObject leftWall;
         public GameObject rightWall;
 
@@ -17,8 +18,7 @@ namespace DLO   {
         // Start is called before the first frame update
         void Start()
         {
-            // Initial Velocity
-            GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+            ServeBall(Random.Range(0,1));       // Serve ball to random player
         }
 
         void OnCollisionEnter2D(Collision2D col)
@@ -106,28 +106,57 @@ namespace DLO   {
             // Hit the left wall?
             if (col.gameObject.name == "Wall Left")
             {
-                Debug.Log("Particles and Re-serve Ball");
+                Debug.Log("Insert particle fx here");
+                ResetBall();
+                ServeBall(0);
             }
 
             // Hit the right wall?
             if (col.gameObject.name == "Wall Right")
             {
-                Debug.Log("Particles and Re-serve Ball");
+                Debug.Log("Insert particle fx here");
+                ResetBall();
+                ServeBall(1);
             }
         }
 
-        void ServeBall(int scoringPlayer)
+        // Public Functions
+        #region
+        public void ServeBall(int player)
         {
-            if (scoringPlayer == 1)
+            isPaused = false;
+
+            if (player == 0)
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.left * speed;
-                Debug.Log("Serve to the left player");
             }
-            if (scoringPlayer == 0)
+            if (player == 1)
             {
                 GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
-                Debug.Log("Serve to the right player");
             }
         }
+
+        public void ResetBall()
+        {
+            transform.position = new Vector3(0, 0, 0);
+        }
+
+        public void PauseBall()
+        {
+            // Pause
+            if (!isPaused)
+            {
+                isPaused = true;
+                pausedVector = GetComponent<Rigidbody2D>().velocity;
+                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
+            // Unpause
+            else if (isPaused)
+            {
+                isPaused = false;
+                GetComponent<Rigidbody2D>().velocity = pausedVector;
+            }
+        }
+        #endregion
     }
 }
