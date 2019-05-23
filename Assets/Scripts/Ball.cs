@@ -5,15 +5,23 @@ using UnityEngine;
 namespace DLO   {
     public class Ball : MonoBehaviour
     {
-        bool isPaused = false;
-        Vector2 pausedVector = new Vector2(0,0);
-
         public float speed = 30;
 
-        public GameObject leftWall;
-        public GameObject rightWall;
+        private bool isPaused = false;
+        private Vector2 pausedVector = new Vector2(0,0);
 
-        public GameManager gameManager;
+        private GameObject leftWall;
+        private GameObject rightWall;
+
+        private GameManager gameManager;
+
+        private void Awake()
+        {
+            // Set GameObjects
+            gameManager = FindObjectOfType<GameManager>();
+            leftWall = GameObject.Find("Wall Left");
+            rightWall = GameObject.Find("Wall Right");
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -23,12 +31,6 @@ namespace DLO   {
 
         void OnCollisionEnter2D(Collision2D col)
         {
-            // Note: 'col' holds the collision information. If the
-            // Ball collided with a paddle, then:
-            //   col.gameObject is the paddle
-            //   col.transform.position is the paddle's position
-            //   col.collider is the paddle's collider
-
             // Hit the left paddle
             if (col.gameObject.name == "Paddle Left")
             {
@@ -86,14 +88,14 @@ namespace DLO   {
 
         void OnTriggerEnter2D(Collider2D col)
         {
-            // Hit the left wall?
+            // Hit the left wall
             if (col.gameObject.name == "Wall Left")
             {
                 gameManager.PlayScore();
                 gameManager.AddScoreRight();
             }
 
-            // Hit the right wall?
+            // Hit the right wall
             if (col.gameObject.name == "Wall Right")
             {
                 gameManager.PlayScore();

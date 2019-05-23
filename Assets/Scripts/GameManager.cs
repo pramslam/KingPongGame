@@ -7,14 +7,16 @@ namespace DLO   {
     {
         public static GameManager instance = null;  // Allows other scripts to call functions from GameManager.             
 
-        public ScoreManager scoreManager;
-        public AudioManager audioManager;
-        public Timer timer;
-        public Ball ball;
-
         public int pointsPerScore = 100;            // Points given when scoring
+        public int gameLength = 180;                // Game length in seconds
+        public float paddleSpeed = 50.0f;           // Paddle speed with keyboard
 
         private bool isEndGame;
+
+        private ScoreManager scoreManager;
+        private AudioManager audioManager;
+        private Timer timer;
+        private Ball ball;
 
         // Ensures a singleton
         void Awake()
@@ -28,6 +30,14 @@ namespace DLO   {
 
             //Set GameManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
             DontDestroyOnLoad(gameObject);
+
+            // Set GameObjects
+            scoreManager = FindObjectOfType<ScoreManager>();
+            audioManager = FindObjectOfType<AudioManager>();
+            timer = FindObjectOfType<Timer>();
+            ball = FindObjectOfType<Ball>();
+
+            timer.SetGameLength(gameLength);
         }
 
         // Start is called before the first frame update
@@ -39,6 +49,14 @@ namespace DLO   {
         // Update is called once per frame
         void Update()
         {
+            // Exit game
+            if (Input.GetKeyDown("escape"))
+            {
+                StopAllCoroutines();
+                Application.Quit();
+            }
+
+            // Pause game
             if (Input.GetKeyDown("space"))
             {
                 if (!isEndGame == true)
@@ -47,6 +65,7 @@ namespace DLO   {
                 }
             }
 
+            // Restart game
             if (Input.GetKeyDown("r"))
             {
                 RestartGame();
@@ -71,6 +90,8 @@ namespace DLO   {
         public void AddScoreLeft()  { scoreManager.AddScoreLeft(pointsPerScore); }
 
         public void AddScoreRight() { scoreManager.AddScoreRight(pointsPerScore); }
+
+        public float GetPaddleSpeed() { return paddleSpeed; }
         
         void PauseGame()
         {

@@ -55,7 +55,6 @@ namespace DLO   {
             }
             else
             {
-
                 if (Microbit == null)
                 {
 
@@ -74,15 +73,11 @@ namespace DLO   {
                     Pos.y += speed * Time.deltaTime * input;
                     Pos.y = Mathf.Clamp(Pos.y, yMin, yMax);
                     gameObject.transform.position = Pos;
-
-
-
                 }
                 else
                 {
                     if (!UseDelta)
                     {
-
                         Vector3 Pos = gameObject.transform.position;
                         Pos.y = Microbit.outputF * yMax;
                         gameObject.transform.position = Pos;
@@ -103,7 +98,6 @@ namespace DLO   {
             yield return new WaitForSeconds(0.5f);
             if (Microbit == null)
             {
-
                 yield return new WaitForSeconds(3);
                 serialMicrobitInput[] AllMicros = FindObjectsOfType<serialMicrobitInput>();
                 foreach (serialMicrobitInput micro in AllMicros)
@@ -117,7 +111,6 @@ namespace DLO   {
                 if (Microbit == null)
                 {
                     StartCoroutine(GetMeMyMicrobit());
-
                 }
             }
             else

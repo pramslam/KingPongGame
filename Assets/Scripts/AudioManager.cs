@@ -6,10 +6,10 @@ namespace DLO   {
     public class AudioManager : MonoBehaviour
     {
         public static AudioManager instance = null;     //Allows other scripts to call functions from SoundManager.             
-        public AudioSource sfxSource;                   //Drag a reference to the audio source which will play the sound effects.
-
         public AudioClip[] bounceSounds;
         public AudioClip[] scoreSounds;
+
+        private AudioSource sfxSource;                  //Drag a reference to the audio source which will play the sound effects.
 
         // Ensures a singleton
         void Awake()
@@ -23,6 +23,9 @@ namespace DLO   {
 
             //Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
             DontDestroyOnLoad(gameObject);
+
+            // Set GameObjects
+            sfxSource = FindObjectOfType<AudioSource>();
         }
 
         // Public Functions

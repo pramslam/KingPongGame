@@ -7,10 +7,10 @@ using System.Threading;
 namespace DLO   {
     public class Timer : MonoBehaviour
     {
-        public int startTime = 180;         // In seconds
         public Text timerText;              // UI text object
 
         private bool isPaused;              // For pausing
+        private int startTime = 180;        // In seconds
         private int timeLeft;               // Seconds left overall
         
         // Start is called before the first frame update
@@ -43,9 +43,8 @@ namespace DLO   {
         {
             string minutes, seconds;
 
-            int secs = ((int)steps % 60);
-
             // Format text for numbers smaller than 10
+            int secs = ((int)steps % 60);
             if (secs < 10) { seconds = "0" + secs.ToString("F0"); }
             else           { seconds = secs.ToString("F0"); }
             
@@ -79,6 +78,8 @@ namespace DLO   {
         }
 
         public int GetTimeLeft() { return timeLeft; }
+
+        public void SetGameLength(int time) { startTime = time; }
         #endregion
     }
 }
