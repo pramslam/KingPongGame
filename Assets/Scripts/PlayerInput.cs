@@ -5,13 +5,13 @@ using UnityEngine;
 namespace DLO   {
     public class PlayerInput : MonoBehaviour
     {
-        public float speed = 10f;
+        private float speed = 10.0f;
         public bool isPlayerOne = true;
-        public float yMax = 4;
-        public float yMin = -4;
+        public float yMax = 31.0f;
+        public float yMin = -31.0f;
 
-        public string Axis1 = "Fire1";
-        public string Axis2 = "Fire2";
+        private string Axis1 = "Fire1";
+        private string Axis2 = "Fire2";
 
         public serialMicrobitInput Microbit = null;
 

@@ -35,6 +35,14 @@ namespace DLO   {
             UpdateScore();
         }
 
+        void UpdateScore()
+        {
+            leftScoreText.text = leftScore.ToString();
+            rightScoreText.text = rightScore.ToString();
+        }
+
+        // Public Functions
+        #region
         public void AddScoreLeft(int newScoreValue)
         {
             leftScore = leftScore + newScoreValue;
@@ -53,11 +61,6 @@ namespace DLO   {
             rightScore = 0;
             UpdateScore();
         }
-
-        void UpdateScore()
-        {
-            leftScoreText.text = leftScore.ToString();
-            rightScoreText.text = rightScore.ToString();
-        }
+        #endregion
     }
 }

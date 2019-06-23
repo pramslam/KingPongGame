@@ -5,34 +5,46 @@ using UnityEngine;
 namespace DLO   {
     public class Ball : MonoBehaviour
     {
-        public float speed = 30;
+        public float speed = 90;
+        private float startingSpeed;
+        private float minSpeed = 30.0f;
+        private float maxSpeed = 150.0f;
 
         private bool isPaused = false;
         private Vector2 pausedVector = new Vector2(0,0);
+        private Rigidbody2D rigidBody;
 
         private GameObject leftWall;
         private GameObject rightWall;
+        private GameObject leftPaddle;
+        private GameObject rightPaddle;
 
         private GameManager gameManager;
 
         private void Awake()
         {
             // Set GameObjects
+            rigidBody = GetComponent<Rigidbody2D>();
             gameManager = FindObjectOfType<GameManager>();
             leftWall = GameObject.Find("Wall Left");
             rightWall = GameObject.Find("Wall Right");
+            leftPaddle = GameObject.Find("Paddle Left");
+            rightPaddle = GameObject.Find("Paddle Right");
+
+            // Save initial speed
+            startingSpeed = speed;
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            ServeBall(Random.Range(0,1));       // Serve ball to random player
+            ServeBall(randomNumber());       // Serve ball to random player
         }
 
         void OnCollisionEnter2D(Collision2D col)
         {
             // Hit the left paddle
-            if (col.gameObject.name == "Paddle Left")
+            if (col.gameObject == leftPaddle)
             {
                 // Calculate hit Factor
                 float y = HitFactor(transform.position,
@@ -43,14 +55,14 @@ namespace DLO   {
                 Vector2 dir = new Vector2(1, y).normalized;
 
                 // Set Velocity with dir * speed
-                GetComponent<Rigidbody2D>().velocity = dir * speed;
+                rigidBody.velocity = dir * speed;
 
                 // Play bounce sound
                 gameManager.PlayBounce();
             }
 
             // Hit the right paddle
-            if (col.gameObject.name == "Paddle Right")
+            if (col.gameObject == rightPaddle)
             {
                 // Calculate hit Factor
                 float y = HitFactor(transform.position,
@@ -61,7 +73,7 @@ namespace DLO   {
                 Vector2 dir = new Vector2(-1, y).normalized;
 
                 // Set Velocity with dir * speed
-                GetComponent<Rigidbody2D>().velocity = dir * speed;
+                rigidBody.velocity = dir * speed;
 
                 // Play bounce sound
                 gameManager.PlayBounce();
@@ -89,34 +101,34 @@ namespace DLO   {
         void OnTriggerEnter2D(Collider2D col)
         {
             // Hit the left wall
-            if (col.gameObject.name == "Wall Left")
+            if (col.gameObject == leftWall)
             {
                 gameManager.PlayScore();
                 gameManager.AddScoreRight();
+                gameManager.ScreenShake();
             }
 
             // Hit the right wall
-            if (col.gameObject.name == "Wall Right")
+            if (col.gameObject == rightWall)
             {
                 gameManager.PlayScore();
                 gameManager.AddScoreLeft();
+                gameManager.ScreenShake();
             }
         }
 
         void OnTriggerExit2D(Collider2D col)
         {
             // Hit the left wall?
-            if (col.gameObject.name == "Wall Left")
+            if (col.gameObject == leftWall)
             {
-                Debug.Log("Insert particle fx here");
                 ResetBall();
                 ServeBall(0);
             }
 
             // Hit the right wall?
-            if (col.gameObject.name == "Wall Right")
+            if (col.gameObject == rightWall)
             {
-                Debug.Log("Insert particle fx here");
                 ResetBall();
                 ServeBall(1);
             }
@@ -126,21 +138,32 @@ namespace DLO   {
         #region
         public void ServeBall(int player)
         {
+            Vector3 heading;
             isPaused = false;
 
             if (player == 0)
             {
-                GetComponent<Rigidbody2D>().velocity = Vector2.left * speed;
+                heading = leftPaddle.transform.position - gameObject.transform.position;
             }
-            if (player == 1)
+            else
             {
-                GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
+                heading = rightPaddle.transform.position - gameObject.transform.position;
             }
+
+            float distance = heading.magnitude;
+            Vector3 direction = heading / distance;
+
+            rigidBody.velocity = direction * speed;
         }
 
         public void ResetBall()
         {
             transform.position = new Vector3(0, 0, 0);
+        }
+
+        public void ResetBallSpeed()
+        {
+            speed = startingSpeed;
         }
 
         public void PauseBall()
@@ -149,16 +172,38 @@ namespace DLO   {
             if (!isPaused)
             {
                 isPaused = true;
-                pausedVector = GetComponent<Rigidbody2D>().velocity;
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                pausedVector = rigidBody.velocity;
+                rigidBody.velocity = Vector2.zero;
             }
             // Unpause
             else if (isPaused)
             {
                 isPaused = false;
-                GetComponent<Rigidbody2D>().velocity = pausedVector;
+                rigidBody.velocity = pausedVector;
             }
         }
+
+        public void ChangeBallSpeed(float newSpeed)
+        {
+            speed += newSpeed;
+
+            // Clamp speed
+            if (speed <= minSpeed) { speed = minSpeed; }
+            if (speed >= maxSpeed) { speed = maxSpeed; }
+
+            Vector2 dir = rigidBody.velocity.normalized;    // Get direction
+            rigidBody.velocity = dir * speed;               // Set velocity
+        }
         #endregion
+
+        int randomNumber()
+        {
+            int range = Random.Range(0, 100);
+            range = range % 2;
+            if (range >= 1)
+                return 1;
+            else
+                return 0;
+        }
     }
 }

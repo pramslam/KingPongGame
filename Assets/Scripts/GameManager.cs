@@ -9,7 +9,8 @@ namespace DLO   {
 
         public int pointsPerScore = 100;            // Points given when scoring
         public int gameLength = 180;                // Game length in seconds
-        public float paddleSpeed = 50.0f;           // Paddle speed with keyboard
+        public float paddleSpeed = 20.0f;           // Paddle speed with keyboard
+        public float ballSpeedStep = 60.0f;         // Speed increase and decrease amount
 
         private bool isEndGame;
 
@@ -17,18 +18,22 @@ namespace DLO   {
         private AudioManager audioManager;
         private Timer timer;
         private Ball ball;
+        private Canvas canvas;
+        private ScreenShake screenShake;
+        private SwitchBackground switchBackground;
+        private CenterLine centerLine;
 
         // Ensures a singleton
         void Awake()
         {
-            //Check if there is already an instance of GameManager
+            // Check if there is already an instance of GameManager
             if (instance == null)
                 instance = this;
-            //If instance already exists:
+            // If instance already exists:
             else if (instance != this)
                 Destroy(gameObject);
 
-            //Set GameManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
+            // Set GameManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
             DontDestroyOnLoad(gameObject);
 
             // Set GameObjects
@@ -36,6 +41,10 @@ namespace DLO   {
             audioManager = FindObjectOfType<AudioManager>();
             timer = FindObjectOfType<Timer>();
             ball = FindObjectOfType<Ball>();
+            canvas = FindObjectOfType<Canvas>();
+            screenShake = FindObjectOfType<ScreenShake>();
+            switchBackground = FindObjectOfType<SwitchBackground>();
+            centerLine = FindObjectOfType<CenterLine>();
 
             timer.SetGameLength(gameLength);
         }
@@ -44,33 +53,60 @@ namespace DLO   {
         void Start()
         {
             isEndGame = false;
+            PauseGame();
         }
 
         // Update is called once per frame
         void Update()
         {
+            // Controls
+            #region
+
             // Exit game
-            if (Input.GetKeyDown("escape"))
+            if (Input.GetButtonDown("Quit Game"))
             {
                 StopAllCoroutines();
                 Application.Quit();
             }
 
             // Pause game
-            if (Input.GetKeyDown("space"))
+            if (Input.GetButtonDown("Pause Game"))
             {
                 if (!isEndGame == true)
                 {
                     PauseGame();
                 }
+                else
+                    RestartGame();
+
+            }
+
+            // Switch the background
+            if (Input.GetButtonDown("Switch Background"))
+            {
+                SwitchBackground();
+            }
+
+            // Switch the background
+            if (Input.GetButtonDown("Increase Ball Speed"))
+            {
+                ball.ChangeBallSpeed(ballSpeedStep);
+            }
+
+            // Switch the background
+            if (Input.GetButtonDown("Decrease Ball Speed"))
+            {
+                ball.ChangeBallSpeed(-ballSpeedStep);
             }
 
             // Restart game
-            if (Input.GetKeyDown("r"))
+            if (Input.GetButtonDown("Restart Game"))
             {
                 RestartGame();
             }
+            #endregion
 
+            // End game when timer runs out
             if (timer.GetTimeLeft() <= 0)
             {
                 if (isEndGame == false)
@@ -81,7 +117,7 @@ namespace DLO   {
             }
         }
 
-        // Public Functions
+        //Public Functions
         #region
         public void PlayBounce()    { audioManager.PlayBounce(); }
 
@@ -91,8 +127,17 @@ namespace DLO   {
 
         public void AddScoreRight() { scoreManager.AddScoreRight(pointsPerScore); }
 
-        public float GetPaddleSpeed() { return paddleSpeed; }
-        
+        public float GetPaddleSpeed()   { return paddleSpeed; }
+
+        public void ScreenShake()   { screenShake.TriggerShake(); }
+
+        public void SwitchBackground()
+        {
+            switchBackground.ChangeBackground();
+            centerLine.ChangeDividerColor(switchBackground.GetCurrentBackground());
+        }
+        #endregion
+
         void PauseGame()
         {
             ball.PauseBall();
@@ -103,9 +148,21 @@ namespace DLO   {
         {
             isEndGame = false;
             timer.ResetTimer();
+            scoreManager.ResetScore();
             ball.ResetBall();
-            ball.ServeBall(Random.Range(0,1));
+            ball.ResetBallSpeed();
+            ball.ServeBall(randomNumber());
+            //PauseGame();
         }
-        #endregion
+
+        int randomNumber()
+        {
+            int range = Random.Range(1, 100);
+            range = range % 2;
+            if (range >= 1)
+                return 1;
+            else
+                return 0;
+        }
     }
 }

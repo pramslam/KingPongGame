@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DLO
-{
+namespace DLO   {
     public class Paddle : MonoBehaviour
     {
         // Keyboard Control Variables
@@ -11,14 +10,14 @@ namespace DLO
         public KeyCode moveDown = KeyCode.S;
 
         private float speed = 50.0f;
-        private float boundY = 34.0f;
-        private Rigidbody2D rb2d;
-        GameManager gameManager;
+        private float boundY = 31.0f;
+        private Rigidbody2D rigidBody;
+        private GameManager gameManager;
 
         // Start is called before the first frame update
         void Start()
         {
-            rb2d = GetComponent<Rigidbody2D>();
+            rigidBody = GetComponent<Rigidbody2D>();
             gameManager = FindObjectOfType<GameManager>();
 
             SetPaddleSpeed();
@@ -27,7 +26,7 @@ namespace DLO
         // Update is called once per frame
         void Update()
         {
-            var vel = rb2d.velocity;
+            var vel = rigidBody.velocity;
             if (Input.GetKey(moveUp))
             {
                 vel.y = speed;
@@ -40,7 +39,7 @@ namespace DLO
             {
                 vel.y = 0;
             }
-            rb2d.velocity = vel;
+            rigidBody.velocity = vel;
 
             var pos = transform.position;
             if (pos.y > boundY)
