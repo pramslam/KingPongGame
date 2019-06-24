@@ -30,9 +30,7 @@ namespace DLO   {
         
         void Start()
         {
-            leftScore = 0;
-            rightScore = 0;
-            UpdateScore();
+            ResetScore();
         }
 
         void UpdateScore()

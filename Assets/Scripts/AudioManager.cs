@@ -8,6 +8,9 @@ namespace DLO   {
         public static AudioManager instance = null;     //Allows other scripts to call functions from SoundManager.             
         public AudioClip[] bounceSounds;
         public AudioClip[] scoreSounds;
+        public AudioClip[] restartGameSounds;
+        public AudioClip[] onFireSounds;
+        public AudioClip[] offFireSounds;
 
         private AudioSource sfxSource;                  //Drag a reference to the audio source which will play the sound effects.
 
@@ -51,6 +54,42 @@ namespace DLO   {
 
             //Set the clip of our efxSource audio source to the clip passed in as a parameter.
             sfxSource.clip = scoreSounds[i];
+
+            //Play the clip.
+            sfxSource.Play();
+        }
+
+        public void PlayRestartGame()
+        {
+            //Randomly select sound
+            int i = Random.Range(0, restartGameSounds.Length - 1);
+
+            //Set the clip of our efxSource audio source to the clip passed in as a parameter.
+            sfxSource.clip = restartGameSounds[i];
+
+            //Play the clip.
+            sfxSource.Play();
+        }
+
+        public void PlayOnFire()
+        {
+            //Randomly select sound
+            int i = Random.Range(0, onFireSounds.Length - 1);
+
+            //Set the clip of our efxSource audio source to the clip passed in as a parameter.
+            sfxSource.clip = onFireSounds[i];
+
+            //Play the clip.
+            sfxSource.Play();
+        }
+
+        public void PlayOffFire()
+        {
+            //Randomly select sound
+            int i = Random.Range(0, offFireSounds.Length - 1);
+
+            //Set the clip of our efxSource audio source to the clip passed in as a parameter.
+            sfxSource.clip = offFireSounds[i];
 
             //Play the clip.
             sfxSource.Play();

@@ -11,11 +11,15 @@ namespace DLO   {
         public int gameLength = 180;                // Game length in seconds
         public float paddleSpeed = 20.0f;           // Paddle speed with keyboard
         public float ballSpeedStep = 60.0f;         // Speed increase and decrease amount
+        public int maxOnFire = 3;                   // Scores in a row to catch on fire
 
         private bool isEndGame;
+        private int leftOnFire = 0;
+        private int rightOnFire = 0;
 
         private ScoreManager scoreManager;
         private AudioManager audioManager;
+        private EffectsManager effectsManager;
         private Timer timer;
         private Ball ball;
         private Canvas canvas;
@@ -39,6 +43,7 @@ namespace DLO   {
             // Set GameObjects
             scoreManager = FindObjectOfType<ScoreManager>();
             audioManager = FindObjectOfType<AudioManager>();
+            effectsManager = FindObjectOfType<EffectsManager>();
             timer = FindObjectOfType<Timer>();
             ball = FindObjectOfType<Ball>();
             canvas = FindObjectOfType<Canvas>();
@@ -46,6 +51,7 @@ namespace DLO   {
             switchBackground = FindObjectOfType<SwitchBackground>();
             centerLine = FindObjectOfType<CenterLine>();
 
+            // Set game variables
             timer.SetGameLength(gameLength);
         }
 
@@ -78,7 +84,6 @@ namespace DLO   {
                 }
                 else
                     RestartGame();
-
             }
 
             // Switch the background
@@ -117,26 +122,6 @@ namespace DLO   {
             }
         }
 
-        //Public Functions
-        #region
-        public void PlayBounce()    { audioManager.PlayBounce(); }
-
-        public void PlayScore()     { audioManager.PlayScore(); }
-
-        public void AddScoreLeft()  { scoreManager.AddScoreLeft(pointsPerScore); }
-
-        public void AddScoreRight() { scoreManager.AddScoreRight(pointsPerScore); }
-
-        public float GetPaddleSpeed()   { return paddleSpeed; }
-
-        public void ScreenShake()   { screenShake.TriggerShake(); }
-
-        public void SwitchBackground()
-        {
-            switchBackground.ChangeBackground();
-            centerLine.ChangeDividerColor(switchBackground.GetCurrentBackground());
-        }
-        #endregion
 
         void PauseGame()
         {
@@ -149,10 +134,14 @@ namespace DLO   {
             isEndGame = false;
             timer.ResetTimer();
             scoreManager.ResetScore();
+            effectsManager.LeftOnFire(false);
+            effectsManager.RightOnFire(false);
+            audioManager.PlayRestartGame();
+            leftOnFire = 0;
+            rightOnFire = 0;
             ball.ResetBall();
             ball.ResetBallSpeed();
             ball.ServeBall(randomNumber());
-            //PauseGame();
         }
 
         int randomNumber()
@@ -164,5 +153,85 @@ namespace DLO   {
             else
                 return 0;
         }
+
+        void CheckPaddleOnFire(string player)
+        {
+            if (player == "Left")
+            {
+                // Do not play effects if already enabled
+                if (rightOnFire >= maxOnFire)
+                {
+                    // Reset opponent fire
+                    effectsManager.RightOnFire(false);
+                    audioManager.PlayOffFire();
+                }
+
+                if (rightOnFire != 0) { rightOnFire = 0; }
+
+                // Do not play effects if already enabled
+                if (leftOnFire < maxOnFire)
+                {
+                    // Check effects
+                    leftOnFire++;
+                    if (leftOnFire >= maxOnFire)
+                    {
+                        // Play effects
+                        effectsManager.LeftOnFire(true);
+                        audioManager.PlayOnFire();
+                    }
+                }
+            }
+
+            if (player == "Right")
+            {
+                // Do not play effects if already enabled
+                if (leftOnFire >= maxOnFire)
+                {
+                    // Reset opponent fire
+                    effectsManager.LeftOnFire(false);
+                    audioManager.PlayOffFire();
+                }
+
+                if (leftOnFire != 0) { leftOnFire = 0; }
+
+                // Do not play effects if already enabled
+                if (rightOnFire < maxOnFire)
+                {
+                    // Check effects
+                    rightOnFire++;
+                    if (rightOnFire >= maxOnFire)
+                    {
+                        // Play effects
+                        effectsManager.RightOnFire(true);
+                        audioManager.PlayOnFire();
+                    }
+                }
+            }
+        }
+
+        // Public Functions
+        #region
+        public float GetPaddleSpeed()   { return paddleSpeed; }
+        public void PlayBounce()        { audioManager.PlayBounce(); }
+        public void PlayScore()         { audioManager.PlayScore(); }
+        public void ScreenShake()       { screenShake.TriggerShake(); }
+
+        public void AddScoreLeft()
+        {
+            scoreManager.AddScoreLeft(pointsPerScore);
+            CheckPaddleOnFire("Left");
+        }
+        public void AddScoreRight()
+        {
+            scoreManager.AddScoreRight(pointsPerScore);
+            CheckPaddleOnFire("Right");
+        }
+
+        public void SwitchBackground()
+        {
+            switchBackground.ChangeBackground();
+            centerLine.ChangeDividerColor(switchBackground.GetCurrentBackground());
+        }
+        #endregion
     }
 }
