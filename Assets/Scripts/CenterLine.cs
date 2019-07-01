@@ -2,30 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CenterLine : MonoBehaviour
+namespace DLO
 {
-    private SpriteRenderer spriteRenderer;
-    private Color color;
-
-    // Start is called before the first frame update
-    void Start()
+    public class CenterLine : MonoBehaviour
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+        private SpriteRenderer spriteRenderer;
+        private Color color;
 
-    public void ChangeDividerColor(int currentBackground)
-    {
-        // Choose the color
-        if (currentBackground == 0 || currentBackground == 2)
+        // Start is called before the first frame update
+        void Start()
         {
-            color = new Color(0, 0, 0, 1);  // Black
-        }
-        else
-        {
-            color = new Color(1, 1, 1, 1);  // White
+            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        // Set new color
-        spriteRenderer.color = color;
+        public void ChangeDividerColor(int currentBackground)
+        {
+            // Choose the color, Must manually set colors for specific BGS, TODO
+            if (currentBackground == 0 || 
+                currentBackground == 2)
+            {
+                color = new Color(0, 0, 0, 1);  // Black
+            }
+            else
+            {
+                color = new Color(1, 1, 1, 1);  // White
+            }
+
+            // Set new color
+            spriteRenderer.color = color;
+        }
     }
 }

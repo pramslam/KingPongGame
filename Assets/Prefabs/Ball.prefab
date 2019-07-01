@@ -32,7 +32,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
-  - {fileID: 2902056220255558392}
+  - {fileID: 5213832185465165122}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 90
---- !u!1001 &5001828114350659928
+--- !u!1001 &2699763207299602146
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -141,7 +141,7 @@ PrefabInstance:
     - target: {fileID: 6140558507739692733, guid: ac3c3832b465d6044a38bcdbc6a8a87c,
         type: 3}
       propertyPath: m_Name
-      value: PS_BallStarTrail
+      value: PS_StarTrailBall
       objectReference: {fileID: 0}
     - target: {fileID: 7866729628619326368, guid: ac3c3832b465d6044a38bcdbc6a8a87c,
         type: 3}
@@ -200,9 +200,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac3c3832b465d6044a38bcdbc6a8a87c, type: 3}
---- !u!4 &2902056220255558392 stripped
+--- !u!4 &5213832185465165122 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7866729628619326368, guid: ac3c3832b465d6044a38bcdbc6a8a87c,
     type: 3}
-  m_PrefabInstance: {fileID: 5001828114350659928}
+  m_PrefabInstance: {fileID: 2699763207299602146}
   m_PrefabAsset: {fileID: 0}

@@ -122,14 +122,16 @@ namespace DLO   {
             // Hit the left wall?
             if (col.gameObject == leftWall)
             {
-                ResetBall();
+                //ResetBall();
+                ResetScoredBall(1);
                 ServeBall(0);
             }
 
             // Hit the right wall?
             if (col.gameObject == rightWall)
             {
-                ResetBall();
+                //ResetBall();
+                ResetScoredBall(0);
                 ServeBall(1);
             }
         }
@@ -159,6 +161,18 @@ namespace DLO   {
         public void ResetBall()
         {
             transform.position = new Vector3(0, 0, 0);
+        }
+
+        public void ResetScoredBall(int player)
+        {
+            if (player == 0)
+            {
+                transform.position = leftPaddle.transform.position + new Vector3(10, 0, 0);
+            }
+            if (player == 1)
+            {
+                transform.position = rightPaddle.transform.position + new Vector3(-10, 0, 0);
+            }
         }
 
         public void ResetBallSpeed()

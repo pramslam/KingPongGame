@@ -5,7 +5,7 @@ using UnityEngine;
 namespace DLO   {
     public class PlayerInput : MonoBehaviour
     {
-        private float speed = 10.0f;
+        private float speed = 100.0f;
         public bool isPlayerOne = true;
         public float yMax = 31.0f;
         public float yMin = -31.0f;
@@ -28,9 +28,14 @@ namespace DLO   {
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.P))
             {
-                speed = -speed;
+                speed = speed + 10;
+            }
+
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                speed = speed - 10;
             }
 
             if (useButtons)

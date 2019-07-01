@@ -22,9 +22,8 @@ namespace DLO   {
         private EffectsManager effectsManager;
         private Timer timer;
         private Ball ball;
-        private Canvas canvas;
         private ScreenShake screenShake;
-        private SwitchBackground switchBackground;
+        private BackgroundVideo backgroundVideo;
         private CenterLine centerLine;
 
         // Ensures a singleton
@@ -46,9 +45,8 @@ namespace DLO   {
             effectsManager = FindObjectOfType<EffectsManager>();
             timer = FindObjectOfType<Timer>();
             ball = FindObjectOfType<Ball>();
-            canvas = FindObjectOfType<Canvas>();
             screenShake = FindObjectOfType<ScreenShake>();
-            switchBackground = FindObjectOfType<SwitchBackground>();
+            backgroundVideo = FindObjectOfType<BackgroundVideo>();
             centerLine = FindObjectOfType<CenterLine>();
 
             // Set game variables
@@ -60,6 +58,7 @@ namespace DLO   {
         {
             isEndGame = false;
             PauseGame();
+            scoreManager.HideWinnerText();
         }
 
         // Update is called once per frame
@@ -117,11 +116,11 @@ namespace DLO   {
                 if (isEndGame == false)
                 {
                     isEndGame = true;
+                    scoreManager.ShowWinnerText();
                     PauseGame();
                 }
             }
         }
-
 
         void PauseGame()
         {
@@ -134,11 +133,12 @@ namespace DLO   {
             isEndGame = false;
             timer.ResetTimer();
             scoreManager.ResetScore();
+            scoreManager.HideWinnerText();
             effectsManager.LeftOnFire(false);
             effectsManager.RightOnFire(false);
-            audioManager.PlayRestartGame();
             leftOnFire = 0;
             rightOnFire = 0;
+            audioManager.PlayRestartGame();
             ball.ResetBall();
             ball.ResetBallSpeed();
             ball.ServeBall(randomNumber());
@@ -229,8 +229,8 @@ namespace DLO   {
 
         public void SwitchBackground()
         {
-            switchBackground.ChangeBackground();
-            centerLine.ChangeDividerColor(switchBackground.GetCurrentBackground());
+            backgroundVideo.ChangeBackground();
+            centerLine.ChangeDividerColor(backgroundVideo.GetCurrentBackground());  // Change line color
         }
         #endregion
     }
