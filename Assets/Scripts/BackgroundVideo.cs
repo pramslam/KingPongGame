@@ -7,6 +7,7 @@ namespace DLO
     public class BackgroundVideo : MonoBehaviour
     {
         public UnityEngine.Video.VideoClip[] videoClip;
+
         private UnityEngine.Video.VideoPlayer videoPlayer;
         private UnityEngine.Video.VideoPlayer vp;
         private int currentVideo = 0;
@@ -18,6 +19,7 @@ namespace DLO
             videoPlayer = gameObject.AddComponent<UnityEngine.Video.VideoPlayer>();
 
             // Video settings
+            videoPlayer.waitForFirstFrame = true;
             videoPlayer.playOnAwake = false;
             videoPlayer.clip = videoClip[currentVideo];
             videoPlayer.renderMode = UnityEngine.Video.VideoRenderMode.MaterialOverride;

@@ -6,6 +6,8 @@ namespace DLO
 {
     public class CenterLine : MonoBehaviour
     {
+        public bool[] isBlack;
+
         private SpriteRenderer spriteRenderer;
         private Color color;
 
@@ -13,13 +15,13 @@ namespace DLO
         void Start()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+            ChangeDividerColor(0);
         }
 
         public void ChangeDividerColor(int currentBackground)
         {
             // Choose the color, Must manually set colors for specific BGS, TODO
-            if (currentBackground == 0 || 
-                currentBackground == 2)
+            if (isBlack[currentBackground] == true)
             {
                 color = new Color(0, 0, 0, 1);  // Black
             }

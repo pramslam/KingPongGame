@@ -6,6 +6,7 @@ namespace DLO   {
     public class Ball : MonoBehaviour
     {
         public float speed = 90;
+
         private float startingSpeed;
         private float minSpeed = 30.0f;
         private float maxSpeed = 150.0f;

@@ -20,6 +20,7 @@ namespace DLO   {
         private ScoreManager scoreManager;
         private AudioManager audioManager;
         private EffectsManager effectsManager;
+        private SponsorsManager sponsorsManager;
         private Timer timer;
         private Ball ball;
         private ScreenShake screenShake;
@@ -43,6 +44,7 @@ namespace DLO   {
             scoreManager = FindObjectOfType<ScoreManager>();
             audioManager = FindObjectOfType<AudioManager>();
             effectsManager = FindObjectOfType<EffectsManager>();
+            sponsorsManager = FindObjectOfType<SponsorsManager>();
             timer = FindObjectOfType<Timer>();
             ball = FindObjectOfType<Ball>();
             screenShake = FindObjectOfType<ScreenShake>();
@@ -103,6 +105,12 @@ namespace DLO   {
                 ball.ChangeBallSpeed(-ballSpeedStep);
             }
 
+            // Reset ball
+            if (Input.GetButtonDown("Reset Ball"))
+            {
+                ball.ResetBall();
+            }
+
             // Restart game
             if (Input.GetButtonDown("Restart Game"))
             {
@@ -116,6 +124,7 @@ namespace DLO   {
                 if (isEndGame == false)
                 {
                     isEndGame = true;
+                    sponsorsManager.PlayAd();
                     scoreManager.ShowWinnerText();
                     PauseGame();
                 }
@@ -131,6 +140,8 @@ namespace DLO   {
         void RestartGame()
         {
             isEndGame = false;
+            SwitchBackground();
+            sponsorsManager.HideSponsorWindow();
             timer.ResetTimer();
             scoreManager.ResetScore();
             scoreManager.HideWinnerText();
@@ -209,6 +220,12 @@ namespace DLO   {
             }
         }
 
+        void SwitchBackground()
+        {
+            backgroundVideo.ChangeBackground();
+            centerLine.ChangeDividerColor(backgroundVideo.GetCurrentBackground());  // Change line color
+        }
+
         // Public Functions
         #region
         public float GetPaddleSpeed()   { return paddleSpeed; }
@@ -225,12 +242,6 @@ namespace DLO   {
         {
             scoreManager.AddScoreRight(pointsPerScore);
             CheckPaddleOnFire("Right");
-        }
-
-        public void SwitchBackground()
-        {
-            backgroundVideo.ChangeBackground();
-            centerLine.ChangeDividerColor(backgroundVideo.GetCurrentBackground());  // Change line color
         }
         #endregion
     }

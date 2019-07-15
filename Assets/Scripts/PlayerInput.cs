@@ -31,11 +31,13 @@ namespace DLO   {
             if (Input.GetKeyDown(KeyCode.P))
             {
                 speed = speed + 10;
+                Debug.Log(speed);
             }
 
             if (Input.GetKeyDown(KeyCode.O))
             {
                 speed = speed - 10;
+                Debug.Log(speed);
             }
 
             if (useButtons)
