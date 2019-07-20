@@ -1028,6 +1028,9 @@ MonoBehaviour:
   - {fileID: 32900000, guid: 960bc0765e0450341af041434548cad6, type: 3}
   - {fileID: 32900000, guid: 002fd2bfbaa82694388f7dec8da6e433, type: 3}
   - {fileID: 32900000, guid: 43106d3c34225264586b3af1bfc8b34f, type: 3}
+  - {fileID: 32900000, guid: 6e4c40f01df08cb4989868fc13377375, type: 3}
+  - {fileID: 32900000, guid: d3e4a64a71a75a24f8640fe5ecdc9221, type: 3}
+  - {fileID: 32900000, guid: 1b0d06ecd42586c41a77dca4fc2f12f4, type: 3}
 --- !u!1 &478928604
 GameObject:
   m_ObjectHideFlags: 0
@@ -1846,8 +1849,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 817121379}
-  - component: {fileID: 817121378}
   - component: {fileID: 817121380}
+  - component: {fileID: 817121378}
   m_Layer: 0
   m_Name: SponsorsManager
   m_TagString: Untagged
@@ -1873,6 +1876,7 @@ MonoBehaviour:
   mainSponsor: {fileID: 694453006}
   subSponsorLeft: {fileID: 265464279}
   subSponsorRight: {fileID: 654931759}
+  microSponsor: {fileID: 0}
 --- !u!4 &817121379
 Transform:
   m_ObjectHideFlags: 0
@@ -1930,7 +1934,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821771741}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 279ef45ec5465b542a239cd6ed0d1cc0, type: 3}
   m_Name: 
@@ -2064,6 +2068,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveUp: 273
   moveDown: 274
+  firstPlayer: 0
+  usingKeyboard: 0
+  axisMovement: 0
 --- !u!1 &873826470
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,7 +2284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &900090741
 Transform:
   m_ObjectHideFlags: 0
@@ -2328,7 +2335,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1100431849
 Transform:
   m_ObjectHideFlags: 0
@@ -2846,7 +2853,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367939288}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 279ef45ec5465b542a239cd6ed0d1cc0, type: 3}
   m_Name: 
@@ -2980,6 +2987,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveUp: 119
   moveDown: 115
+  firstPlayer: 1
+  usingKeyboard: 0
+  axisMovement: 0
 --- !u!1 &1478682587
 GameObject:
   m_ObjectHideFlags: 0
@@ -3271,7 +3281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9016734697dcd624788016a3ade312a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBlack: 000100010001000000010001
+  isBlack: 000100010001000000010001010001
 --- !u!1 &1696800267
 GameObject:
   m_ObjectHideFlags: 0
@@ -3302,7 +3312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointsPerScore: 100
-  gameLength: 2
+  gameLength: 20
   paddleSpeed: 70
   ballSpeedStep: 30
   maxOnFire: 3

@@ -93,13 +93,13 @@ namespace DLO   {
                 SwitchBackground();
             }
 
-            // Switch the background
+            // Increase ball speed
             if (Input.GetButtonDown("Increase Ball Speed"))
             {
                 ball.ChangeBallSpeed(ballSpeedStep);
             }
 
-            // Switch the background
+            // Decrease ball speed
             if (Input.GetButtonDown("Decrease Ball Speed"))
             {
                 ball.ChangeBallSpeed(-ballSpeedStep);

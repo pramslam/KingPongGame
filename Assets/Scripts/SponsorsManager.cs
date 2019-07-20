@@ -12,6 +12,7 @@ namespace DLO   {
         public Image mainSponsor;
         public Image subSponsorLeft;
         public Image subSponsorRight;
+        public Image microSponsor;
 
         private TimerSponsor timer;
         private bool delayingAd = false;
