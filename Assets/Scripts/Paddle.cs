@@ -8,8 +8,9 @@ namespace DLO   {
         public KeyCode moveUp = KeyCode.W;
         public KeyCode moveDown = KeyCode.S;
         public bool firstPlayer = true;
-        public bool usingKeyboard = true;
 
+        [SerializeField]
+        private bool usingKeyboard = true;
         [SerializeField]
         private float axisMovement = 0.0f;
         private float boundY = 31.0f;                           // Game field boundary
@@ -25,6 +26,7 @@ namespace DLO   {
         {
             rigidBody = GetComponent<Rigidbody2D>();
             gameManager = FindObjectOfType<GameManager>();
+            usingKeyboard = gameManager.GetPaddleControl();
             speed = gameManager.GetPaddleSpeed();
             SetPlayer();
         }

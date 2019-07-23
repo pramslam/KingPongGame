@@ -3822,6 +3822,7 @@ MonoBehaviour:
   paddleSpeed: 70
   ballSpeedStep: 30
   maxOnFire: 3
+  useKeyboard: 1
 --- !u!4 &1696800269
 Transform:
   m_ObjectHideFlags: 0
