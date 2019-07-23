@@ -7,17 +7,30 @@ namespace DLO   {
     public class SponsorsManager : MonoBehaviour
     {
         public GameObject sponsorsUI;
+        public GameObject mainUI;
+        public GameObject subUI;
+        public GameObject microUI;
         public Text presentedByText;
-        public Image background;
-        public Image mainSponsor;
-        public Image subSponsorLeft;
-        public Image subSponsorRight;
-        public Image microSponsor;
+        public Image mainSponsorImage;
+        public Image subSponsorLeftImage;
+        public Image subSponsorRightImage;
+        public Image microSponsorImageLL;
+        public Image microSponsorImageLR;
+        public Image microSponsorImageRL;
+        public Image microSponsorImageRR;
+        public Sprite[] mainSponsors;
+        public Sprite[] subSponsors;
+        public Sprite[] microSponsors;
 
         private TimerSponsor timer;
         private bool delayingAd = false;
         private bool playingAd = false;
-        private bool firstSponsor = true;
+        private bool playedMain;
+        private bool playedSub;
+        private bool playedMicro;
+        private int currentMain = 0;
+        private int currentSub = 0;
+        private int currentMicro = 0;
 
         private void Awake()
         {
@@ -27,6 +40,9 @@ namespace DLO   {
         // Start is called before the first frame update
         void Start()
         {
+            playedMain = false;
+            playedSub = false;
+            playedMicro = false;
             ClearFlags();
         }
 
@@ -60,30 +76,86 @@ namespace DLO   {
 
         void ShowMainSponsor()
         {
-            mainSponsor.gameObject.SetActive(true);
-            subSponsorLeft.gameObject.SetActive(false);
-            subSponsorRight.gameObject.SetActive(false);
+            mainUI.SetActive(true);
+            subUI.SetActive(false);
+            microUI.SetActive(false);
         }
 
         void ShowSubSponsor()
         {
-            mainSponsor.gameObject.SetActive(false);
-            subSponsorLeft.gameObject.SetActive(true);
-            subSponsorRight.gameObject.SetActive(true);
+            mainUI.SetActive(false);
+            subUI.SetActive(true);
+            microUI.SetActive(false);
+        }
+
+        void ShowMicroSponsor()
+        {
+            mainUI.SetActive(false);
+            subUI.SetActive(false);
+            microUI.SetActive(true);
+        }
+        void ShowCredits()
+        {
+            /*
+            credits.gameObject.SetActive(false);
+            creditsSpecial.gameObject.SetActive(false);
+            */
         }
 
         void ChooseSponsor()
         {
-            // flip flop between main sponsor and sub sponsors
-            if (firstSponsor == true)
+            // swap between sponsors
+            if (mainSponsors.Length >= 1 && playedMain == false)
             {
+                // main sponsor ads
+                mainSponsorImage.sprite = mainSponsors[currentMain];
                 ShowMainSponsor();
-                firstSponsor = false;
+
+                currentMain++;
+                if (currentMain >= mainSponsors.Length)
+                {
+                    currentMain = 0;
+                    playedMain = true;
+                }
             }
-            else if (firstSponsor == false)
+            else if (subSponsors.Length >= 1 && playedSub == false)
             {
+                // sub sponsor ads
+                subSponsorLeftImage.sprite = subSponsors[currentSub];
+                subSponsorRightImage.sprite = subSponsors[currentSub + 1];
                 ShowSubSponsor();
-                firstSponsor = true;
+
+                currentSub = currentSub + 2;
+                if (currentSub >= subSponsors.Length)
+                {
+                    currentSub = 0;
+                    playedSub = true;
+                }
+            }
+            else if (microSponsors.Length >= 1 && playedMicro == false)
+            {
+                // micro sponsor ads
+                microSponsorImageLL.sprite = microSponsors[currentMicro];
+                microSponsorImageLR.sprite = microSponsors[currentMicro + 1];
+                microSponsorImageRL.sprite = microSponsors[currentMicro + 2];
+                microSponsorImageRR.sprite = microSponsors[currentMicro + 3];
+                ShowMicroSponsor();
+
+                currentMicro = currentMicro + 4;
+                if (currentMicro >= microSponsors.Length)
+                {
+                    currentMicro = 0;
+                    playedMicro = true;
+                }
+            }
+            else
+            {
+                playedMain = false;
+                playedSub = false;
+                playedMicro = false;
+                
+                // Credits
+                Debug.Log("Credits");
             }
         }
 
