@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace DLO   {
     public class GameManager : MonoBehaviour
@@ -13,6 +14,10 @@ namespace DLO   {
         public float ballSpeedStep = 60.0f;         // Speed increase and decrease amount
         public int maxOnFire = 3;                   // Scores in a row to catch on fire
         public bool useKeyboard = true;             // Use the Keyboard? or Controller
+
+        public List<Ball> balls = new List<Ball>();
+        public KeyCode BallKeyCode = KeyCode.Alpha0;
+
 
         private bool isEndGame;
         private int leftOnFire = 0;
@@ -47,7 +52,15 @@ namespace DLO   {
             effectsManager = FindObjectOfType<EffectsManager>();
             sponsorsManager = FindObjectOfType<SponsorsManager>();
             timer = FindObjectOfType<Timer>();
-            ball = FindObjectOfType<Ball>();
+            if (balls.Count <= 0)
+            {
+                ball = FindObjectOfType<Ball>();
+                balls.Add(ball);
+            }
+            else
+            {
+                ball = balls[0];
+            }
             screenShake = FindObjectOfType<ScreenShake>();
             backgroundVideo = FindObjectOfType<BackgroundVideo>();
             centerLine = FindObjectOfType<CenterLine>();
@@ -62,6 +75,15 @@ namespace DLO   {
             isEndGame = false;
             PauseGame();
             scoreManager.HideWinnerText();
+
+            foreach(Ball b in balls)
+            {
+                if(b != ball)
+                {
+                    b.PauseBall();
+                    b.gameObject.SetActive(false);
+                }
+            }
         }
 
         // Update is called once per frame
@@ -117,6 +139,11 @@ namespace DLO   {
             {
                 RestartGame();
             }
+
+            if (Input.GetKeyDown(BallKeyCode))
+            {
+                ChangeBall();
+            }
             #endregion
 
             // End game when timer runs out
@@ -134,8 +161,42 @@ namespace DLO   {
 
         void PauseGame()
         {
-            ball.PauseBall();
+            ball.SwitchPaused();
             timer.PauseTimer();
+        }
+
+        void ChangeBall()
+        {
+            int index = balls.IndexOf(ball);
+            index = (index + 1) % balls.Count;
+
+            bool ballIsPaused = ball.isPaused;
+            Vector3 ballV = ball.rigidBody.velocity;
+            Vector3 ballP = ball.transform.position;
+
+            ball.PauseBall();
+
+            try
+            {
+               ball.DoDisable();
+            }
+            catch { }
+
+            ball.gameObject.SetActive(false);
+            ball = balls[index];
+            ball.gameObject.SetActive(true);
+            if (ballIsPaused)
+            {
+                ball.PauseBall();
+            }
+            else
+            {
+                ball.UnPauseBall();
+            }
+
+            ball.rigidBody.velocity = ballV;
+            ball.transform.position = ballP;
+
         }
 
         void RestartGame()
