@@ -7,22 +7,22 @@ namespace DLO   {
     {
         public float speed = 90;
 
-        private float startingSpeed;
-        private float minSpeed = 30.0f;
-        private float maxSpeed = 150.0f;
+        public float startingSpeed;
+        public float minSpeed = 30.0f;
+        public float maxSpeed = 150.0f;
 
-        private bool isPaused = false;
-        private Vector2 pausedVector = new Vector2(0,0);
-        private Rigidbody2D rigidBody;
+        public bool isPaused = false;
+        public Vector2 pausedVector = new Vector2(0,0);
+        public Rigidbody2D rigidBody;
 
-        private GameObject leftWall;
-        private GameObject rightWall;
-        private GameObject leftPaddle;
-        private GameObject rightPaddle;
+        public GameObject leftWall;
+        public GameObject rightWall;
+        public GameObject leftPaddle;
+        public GameObject rightPaddle;
 
-        private GameManager gameManager;
+        public GameManager gameManager;
 
-        private void Awake()
+        public virtual void Awake()
         {
             // Set GameObjects
             rigidBody = GetComponent<Rigidbody2D>();
@@ -37,12 +37,12 @@ namespace DLO   {
         }
 
         // Start is called before the first frame update
-        void Start()
+        public virtual void Start()
         {
             ServeBall(randomNumber());       // Serve ball to random player
         }
 
-        void OnCollisionEnter2D(Collision2D col)
+        public virtual void OnCollisionEnter2D(Collision2D col)
         {
             // Hit the left paddle
             if (col.gameObject == leftPaddle)
@@ -88,7 +88,7 @@ namespace DLO   {
             }
         }
 
-        float HitFactor(Vector2 ballPos, Vector2 paddlePos, float paddleHeight)
+        public virtual float HitFactor(Vector2 ballPos, Vector2 paddlePos, float paddleHeight)
         {
             // ascii art:
             // ||  1 <- at the top of the racket
@@ -99,7 +99,7 @@ namespace DLO   {
             return (ballPos.y - paddlePos.y) / paddleHeight;
         }
 
-        void OnTriggerEnter2D(Collider2D col)
+        public virtual void OnTriggerEnter2D(Collider2D col)
         {
             // Hit the left wall
             if (col.gameObject == leftWall)
@@ -118,7 +118,7 @@ namespace DLO   {
             }
         }
 
-        void OnTriggerExit2D(Collider2D col)
+        public virtual void OnTriggerExit2D(Collider2D col)
         {
             // Hit the left wall?
             if (col.gameObject == leftWall)
@@ -139,7 +139,7 @@ namespace DLO   {
 
         // Public Functions
         #region
-        public void ServeBall(int player)
+        public virtual void ServeBall(int player)
         {
             Vector3 heading;
             isPaused = false;
@@ -159,7 +159,7 @@ namespace DLO   {
             rigidBody.velocity = direction * speed;
         }
 
-        public void ResetBall()
+        public virtual void ResetBall()
         {
             transform.position = new Vector3(0, 0, 0);
         }
@@ -176,29 +176,62 @@ namespace DLO   {
             }
         }
 
-        public void ResetBallSpeed()
+        public virtual void ResetBallSpeed()
         {
             speed = startingSpeed;
         }
 
-        public void PauseBall()
+        public virtual void SwitchPaused()
         {
-            // Pause
-            if (!isPaused)
+            try
             {
-                isPaused = true;
-                pausedVector = rigidBody.velocity;
-                rigidBody.velocity = Vector2.zero;
+                // Pause
+                if (!isPaused)
+                {
+                    isPaused = true;
+                    pausedVector = rigidBody.velocity;
+                    rigidBody.velocity = Vector2.zero;
+                }
+                // Unpause
+                else if (isPaused)
+                {
+                    isPaused = false;
+                    rigidBody.velocity = pausedVector;
+                }
             }
-            // Unpause
-            else if (isPaused)
-            {
-                isPaused = false;
-                rigidBody.velocity = pausedVector;
-            }
+            catch { }
         }
 
-        public void ChangeBallSpeed(float newSpeed)
+        public virtual void PauseBall()
+        {
+            try
+            {
+                // Pause
+                if (!isPaused)
+                {
+                    isPaused = true;
+                    pausedVector = rigidBody.velocity;
+                    rigidBody.velocity = Vector2.zero;
+                }
+            }
+            catch { }
+        }
+
+        public virtual void UnPauseBall()
+        {
+            try
+            {
+                // Unpause
+                if (isPaused)
+                {
+                    isPaused = false;
+                    rigidBody.velocity = pausedVector;
+                }
+            }
+            catch { }
+        }
+
+        public virtual void ChangeBallSpeed(float newSpeed)
         {
             speed += newSpeed;
 
@@ -211,7 +244,7 @@ namespace DLO   {
         }
         #endregion
 
-        int randomNumber()
+        public virtual int randomNumber()
         {
             int range = Random.Range(0, 100);
             range = range % 2;
@@ -219,6 +252,21 @@ namespace DLO   {
                 return 1;
             else
                 return 0;
+        }
+
+        public virtual void Update()
+        {
+
+        }
+
+        public virtual void DoDisable()
+        {
+            
+        }
+
+        private void OnDisable()
+        {
+            DoDisable();
         }
     }
 }
