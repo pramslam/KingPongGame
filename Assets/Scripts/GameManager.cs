@@ -13,7 +13,7 @@ namespace DLO   {
         public float paddleSpeed = 20.0f;           // Paddle speed with keyboard
         public float ballSpeedStep = 60.0f;         // Speed increase and decrease amount
         public int maxOnFire = 3;                   // Scores in a row to catch on fire
-        public bool useKeyboard = true;             // Use the Keyboard? or Controller
+        public bool useKeyboard = false;            // Use the Keyboard? or Controller
 
         public List<Ball> balls = new List<Ball>();
         public KeyCode BallKeyCode = KeyCode.Alpha0;

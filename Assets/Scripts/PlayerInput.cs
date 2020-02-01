@@ -19,7 +19,7 @@ namespace DLO   {
 
         public bool usePositionJoystick = true;
 
-        public string JoystickName = "";
+        public string JoystickName = "Horizontal";
 
         public bool FlipInput = false;
 

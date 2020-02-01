@@ -10,7 +10,7 @@ namespace DLO   {
         public bool firstPlayer = true;
 
         [SerializeField]
-        private bool usingKeyboard = true;
+        private bool usingKeyboard = false;
         [SerializeField]
         private float axisMovement = 0.0f;
         private float boundY = 31.0f;                           // Game field boundary
