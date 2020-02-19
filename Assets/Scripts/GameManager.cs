@@ -12,8 +12,9 @@ namespace DLO   {
         public float paddleSpeed = 20.0f;           // Paddle speed with keyboard
         public float ballSpeedStep = 60.0f;         // Speed increase and decrease amount
         public int maxOnFire = 3;                   // Scores in a row to catch on fire
-        public bool useKeyboard = false;             // Use the Keyboard? or Controller
+        public bool useKeyboard = false;            // Use the Keyboard? or Controller
         public bool useBackgroundVideo = false;     // Use background video? or static image
+        public bool useSponsors = false;            // Use sponsor messages?
 
         private bool isEndGame;
         private int leftOnFire = 0;
@@ -133,7 +134,7 @@ namespace DLO   {
                 if (isEndGame == false)
                 {
                     isEndGame = true;
-                    sponsorsManager.PlayAd();
+                    //sponsorsManager.PlayAd();
                     scoreManager.ShowWinnerText();
                     PauseGame();
                 }
@@ -150,7 +151,7 @@ namespace DLO   {
         {
             isEndGame = false;
             SwitchBackground();
-            sponsorsManager.HideSponsorWindow();
+            //sponsorsManager.HideSponsorWindow();
             timer.ResetTimer();
             scoreManager.ResetScore();
             scoreManager.HideWinnerText();
