@@ -10,6 +10,7 @@ using DLO;
 
 class CurveBall : Ball
 {
+    /*
     public AnimationCurve curveX;
     public AnimationCurve curveY;
     public float AnimationPeriod = 1;
@@ -33,5 +34,6 @@ class CurveBall : Ball
             base.rigidBody.velocity += dir2d;
         }
     }
+    */
 }
 

@@ -8,6 +8,7 @@ using UnityEngine;
 using DLO;
 class SubBall : Ball
 {
+    /*
     public override void OnTriggerExit2D(Collider2D col)
     {
         // Hit the left wall?
@@ -22,5 +23,6 @@ class SubBall : Ball
             Destroy(gameObject);
         }
     }
+    */
 }
 

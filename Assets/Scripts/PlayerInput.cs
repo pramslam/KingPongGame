@@ -17,12 +17,6 @@ namespace DLO   {
 
         public bool useButtons = true;
 
-        public bool usePositionJoystick = true;
-
-        public string JoystickName = "Horizontal";
-
-        public bool FlipInput = false;
-
         public string PotentialComPort = "COM1";
 
         public bool UseDelta = false;
@@ -68,25 +62,23 @@ namespace DLO   {
             }
             else
             {
-                if (Microbit == null || usePositionJoystick)
+                if (Microbit == null)
                 {
 
                     float input = 0f;
 
-                    if (!string.IsNullOrEmpty(JoystickName))
+                    if (isPlayerOne)
                     {
-                        input = Input.GetAxisRaw(JoystickName);
+                        input = Input.GetAxisRaw("Vertical");
                     }
                     else
                     {
-                        Debug.LogWarning("joystick name is not valid");
+                        input = Input.GetAxisRaw("Vertical2");
                     }
 
                     Vector3 Pos = gameObject.transform.position;
-                    // Pos.y += speed * Time.deltaTime * input;
-                    float pos = yMax * input;
-                    if (FlipInput) pos = -pos;
-                    Pos.y = Mathf.Clamp(pos, yMin, yMax);
+                    Pos.y += speed * Time.deltaTime * input;
+                    Pos.y = Mathf.Clamp(Pos.y, yMin, yMax);
                     gameObject.transform.position = Pos;
                 }
                 else
@@ -105,15 +97,6 @@ namespace DLO   {
                         gameObject.transform.position = Pos;
                     }
                 }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha9) && !isPlayerOne)
-            {
-                FlipInput = !FlipInput;
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha8) && isPlayerOne)
-            {
-                FlipInput = !FlipInput;
             }
         }
 

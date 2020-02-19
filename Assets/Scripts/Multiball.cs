@@ -8,6 +8,7 @@ using UnityEngine;
 using DLO;
 class Multiball : Ball
 {
+    /*
     public GameObject prefab;
 
     private List<Ball> ManagedBalls = new List<Ball>();
@@ -140,5 +141,6 @@ class Multiball : Ball
         }
         ManagedBalls.Clear();
     }
+    */
 }
 

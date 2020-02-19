@@ -11,23 +11,27 @@ namespace DLO
         private UnityEngine.Video.VideoPlayer videoPlayer;
         private UnityEngine.Video.VideoPlayer vp;
         private int currentVideo = 0;
+        private bool useBackgroundVideo = true;
 
         // Start is called before the first frame update
         void Start()
         {
-            // Setup gameobject
-            videoPlayer = gameObject.AddComponent<UnityEngine.Video.VideoPlayer>();
+            if (useBackgroundVideo == true)
+            {
+                // Setup gameobject
+                videoPlayer = gameObject.AddComponent<UnityEngine.Video.VideoPlayer>();
 
-            // Video settings
-            videoPlayer.waitForFirstFrame = true;
-            videoPlayer.playOnAwake = false;
-            videoPlayer.clip = videoClip[currentVideo];
-            videoPlayer.renderMode = UnityEngine.Video.VideoRenderMode.MaterialOverride;
-            videoPlayer.targetMaterialRenderer = GetComponent<Renderer>();
-            videoPlayer.targetMaterialProperty = "_MainTex";
-            videoPlayer.isLooping = true;
+                // Video settings
+                videoPlayer.waitForFirstFrame = true;
+                videoPlayer.playOnAwake = false;
+                videoPlayer.clip = videoClip[currentVideo];
+                videoPlayer.renderMode = UnityEngine.Video.VideoRenderMode.MaterialOverride;
+                videoPlayer.targetMaterialRenderer = GetComponent<Renderer>();
+                videoPlayer.targetMaterialProperty = "_MainTex";
+                videoPlayer.isLooping = true;
 
-            videoPlayer.Play();                             // Play first video
+                videoPlayer.Play();                             // Play first video
+            }
         }
 
         // Public functions
@@ -44,6 +48,11 @@ namespace DLO
         }
 
         public int GetCurrentBackground() { return currentVideo; }
+
+        public void SetBackgroundVideo(bool useVideo)
+        { 
+            useBackgroundVideo = useVideo;
+        }
         #endregion
     }
 }
