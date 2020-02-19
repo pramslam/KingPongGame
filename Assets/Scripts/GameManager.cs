@@ -64,6 +64,12 @@ namespace DLO   {
             isEndGame = false;
             PauseGame();
             scoreManager.HideWinnerText();
+
+            // Set initial center line Color
+            if (useBackgroundVideo == false)
+            {
+                centerLine.SetDividerColor(new Color(0, 0, 0, 1));  // Change line color to black
+            }
         }
 
         // Update is called once per frame
@@ -233,8 +239,7 @@ namespace DLO   {
 
             if (useBackgroundVideo == false)
             {
-
-                centerLine.ChangeDividerColor(backgroundVideo.GetCurrentBackground());  // Change line color
+                centerLine.SetDividerColor(new Color(0, 0, 0, 1));  // Change line color to black
             }
         }
 

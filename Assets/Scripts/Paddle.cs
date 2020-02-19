@@ -8,8 +8,6 @@ namespace DLO   {
         public KeyCode moveUp = KeyCode.W;
         public KeyCode moveDown = KeyCode.S;
         public bool firstPlayer = true;
-
-        [SerializeField]
         private bool usingKeyboard = true;
         [SerializeField]
         private float axisMovement = 0.0f;

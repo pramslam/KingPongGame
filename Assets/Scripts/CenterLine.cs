@@ -33,5 +33,11 @@ namespace DLO
             // Set new color
             spriteRenderer.color = color;
         }
+
+        public void SetDividerColor(Color color)
+        {
+            // Set new color
+            spriteRenderer.color = color;
+        }
     }
 }
